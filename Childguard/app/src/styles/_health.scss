@@ -1,0 +1,87 @@
+// Layout and Background Styles
+.health_background {
+    background-color: #f3f3fb;
+}
+
+.health_hero {
+    background-image: url('http://localhost:3002/images/food.jpeg');
+    background-size: cover;
+    height: 400px;
+    background-position: center;
+    padding: 20px;
+    text-align: left;
+    color: black;
+    display: flex;
+    flex-direction: column;
+}
+
+.health_hero_text {
+    max-width: 60%;
+    margin-right: 20px;
+}
+
+// Typography Styles
+.health_large_text {
+    font-size: 44px;
+    margin-bottom: 50px;
+    font-family: 'Oswald', sans-serif;
+}
+
+.health_normal_text {
+    font-size: 20px;
+    margin-bottom: 20px;
+    font-family: 'Oswald', sans-serif;
+}
+
+// Toolbar Styles
+.health_toolbar {
+    justify-content: space-between;
+}
+
+.health_search_input {
+    color: black;
+}
+
+// Card Styles
+.health_card {
+    position: relative;
+    width: calc(20% - 20px);
+    height: 250px;
+    transition: transform 0.3s ease-in-out;
+
+    &:hover {
+        transform: scale(1.15);
+    }
+}
+
+.health_card_content {
+    color: darkslategrey;
+    background-color: whitesmoke;
+}
+
+.health_card_actions {
+    position: absolute;
+    bottom: 8px;
+    left: 0;
+    right: 0;
+    justify-content: center;
+}
+
+// Grid and Box Styles
+.health_image_box {
+    width: 100%;
+    height: 100%;
+    borderRadius: 50px;
+}
+
+.health_button {
+    background-color: #574849;
+
+    &:hover {
+        background-color: #125d34;
+    }
+}
+
+.health_footer {
+    width: 100%;
+}

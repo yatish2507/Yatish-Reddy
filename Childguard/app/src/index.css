@@ -1,0 +1,33 @@
+body{
+    margin:0;
+}
+h2{
+font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  font-style: normal;
+  color:#f75951
+          }
+ p {
+  font-family: "Dosis", sans-serif;
+  font-optical-sizing: auto;
+  
+  font-style: normal;
+}
+ h6{
+    font-family: "Dancing Script", cursive;
+  font-optical-sizing: auto;
+  
+  font-style: normal;
+}
+
+
+.footer {
+            background-color: #574849;
+            color: white;
+            padding-top: 30px;
+            text-align: center;
+            padding-bottom: 30px;
+            
+            bottom: 0;
+            width: 100%;
+          }

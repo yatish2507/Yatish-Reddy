@@ -1,0 +1,1783 @@
+openapi: 3.0.3
+info:
+  title: ChildGuard API
+  description: API for managing organizations within the ChildGuard platform.
+  version: "1.0.0"
+servers:
+  - url: https://api.childguard.com/v1
+tags:
+  - name: Organization
+    description: Everything about the Organization
+  - name: Projects
+    description: Everything about the Projects
+  - name: Users
+    description: Everything about the User
+  - name: Resources
+    description: Everything about the education resources
+  - name: Donations
+    description: Everything about Donations
+  - name: Volunteer Opportunities
+    description: Operations related to volunteer opportunities within the ChildGuard platform
+  - name: HealthAndNutritionGuides
+    description: Operations related to health and nutrition guides
+paths:
+  /educationalResources:
+    get:
+      tags:
+        - Resources
+      summary: List all educational resources
+      description: Retrieve a list of all educational resources available on the platform.
+      responses:
+        "200":
+          description: A list of educational resources.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/EducationalResource"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Resources
+      summary: Add a new educational resource
+      description: Create a new educational resource with the provided information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EducationalResourceCreate"
+      responses:
+        "201":
+          description: Educational resource created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EducationalResource"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /educationalResources/{resourceId}:
+    get:
+      tags:
+        - Resources
+      summary: Get a specific educational resource
+      description: Retrieve detailed information about an educational resource by its ID.
+      parameters:
+        - in: path
+          name: resourceId
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the educational resource.
+          example: "resource123"
+      responses:
+        "200":
+          description: Detailed information about the educational resource.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EducationalResource"
+        "404":
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - Resources
+      summary: Update an existing educational resource
+      description: Update information for an existing educational resource identified by its ID.
+      parameters:
+        - in: path
+          name: resourceId
+          required: true
+          schema:
+            type: string
+          description: The unique identifier of the educational resource to update.
+          example: "resource123"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/EducationalResourceUpdate"
+      responses:
+        "200":
+          description: Educational resource updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/EducationalResource"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Resources
+      summary: Delete a specific educational resource
+      description: Remove an educational resource from the platform by its ID.
+      parameters:
+        - in: path
+          name: resourceId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the educational resource to be deleted.
+            example: "resource123"
+      responses:
+        "204":
+          description: Educational resource deleted successfully.
+        "404":
+          description: Resource not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /users:
+    get:
+      tags:
+        - Users
+      summary: List all users
+      description: Retrieve a list of all users registered on the platform.
+      responses:
+        "200":
+          description: A list of users.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/User"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Users
+      summary: Create a new user
+      description: Register a new user with the provided information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserCreate"
+      responses:
+        "201":
+          description: User successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /user/login:
+    get:
+      tags:
+        - Users
+      summary: Logs user into the system
+      description: ""
+      operationId: loginUser
+      parameters:
+        - name: username
+          in: query
+          description: The user name for login
+          required: false
+          schema:
+            type: string
+        - name: password
+          in: query
+          description: The password for login in clear text
+          required: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid username/password supplied
+  /user/logout:
+    get:
+      tags:
+        - Users
+      summary: Logs out current logged in user session
+      description: ""
+      operationId: logoutUser
+      parameters: []
+      responses:
+        default:
+          description: successful operation
+  /users/{userId}:
+    get:
+      tags:
+        - Users
+      summary: Get a specific user
+      description: Retrieve detailed information about a user by their ID.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the user.
+      responses:
+        "200":
+          description: Detailed user information.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "404":
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+    put:
+      tags:
+        - Users
+      summary: Update a user
+      description: Completely update an existing user's information with a new set of data.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            description: Unique identifier of the user to be updated.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserUpdate"
+      responses:
+        "200":
+          description: User information successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid input data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - Users
+      summary: Partially update a user
+      description: Update part of an existing user's information.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            description: Unique identifier of the user to be partially updated.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/UserPartialUpdate"
+      responses:
+        "200":
+          description: User information successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/User"
+        "400":
+          description: Invalid input data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Users
+      summary: Delete a user
+      description: Remove a user from the platform.
+      parameters:
+        - in: path
+          name: userId
+          required: true
+          schema:
+            type: string
+            description: Unique identifier of the user to be deleted.
+      responses:
+        "204":
+          description: User successfully deleted.
+        "404":
+          description: User not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /organizations:
+    get:
+      tags:
+        - Organization
+      summary: List all organizations
+      description: Retrieve a list of all organizations registered on the platform.
+      responses:
+        "200":
+          description: A list of organizations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Organization"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Organization
+      summary: Create a new organization
+      description: Register a new organization with the provided information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationCreate"
+      responses:
+        "201":
+          description: Organization successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /organizations/{organizationId}:
+    get:
+      tags:
+        - Organization
+      summary: Get a specific organization
+      description: Retrieve detailed information about an organization by its ID.
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the organization.
+      responses:
+        "200":
+          description: Detailed organization information.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+        "404":
+          description: Organization not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - Organization
+      summary: Update an organization
+      description: Update information for an existing organization by its ID.
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the organization.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/OrganizationCreate"
+      responses:
+        "200":
+          description: Organization successfully updated.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Organization"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Organization not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Organization
+      summary: Delete an organization
+      description: Delete an existing organization by its ID.
+      parameters:
+        - in: path
+          name: organizationId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the organization.
+      responses:
+        "204":
+          description: Organization successfully deleted.
+        "404":
+          description: Organization not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /projects:
+    get:
+      tags:
+        - Projects
+      summary: List all projects
+      description: Retrieve a list of all projects registered on the platform.
+      responses:
+        "200":
+          description: A list of projects.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Project"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Projects
+      summary: Create a new project
+      description: Add a new project with the provided details.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectCreate"
+      responses:
+        "201":
+          description: Project successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /projects/{projectId}:
+    get:
+      tags:
+        - Projects
+      summary: Get a specific project
+      description: Retrieve detailed information about a project by its ID.
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the project.
+      responses:
+        "200":
+          description: Detailed project information.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "404":
+          description: Project not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    patch:
+      tags:
+        - Projects
+      summary: Update an existing project
+      description: Update details for an existing project identified by its ID.
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/ProjectUpdate"
+      responses:
+        "200":
+          description: Project updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Project"
+        "400":
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "404":
+          description: Project not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Projects
+      summary: Delete a project
+      description: Remove a project from the platform by its ID.
+      parameters:
+        - in: path
+          name: projectId
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Project deleted successfully.
+        "404":
+          description: Project not found.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /donations:
+    get:
+      tags:
+        - Donations
+      summary: List all donations
+      responses:
+        "200":
+          description: A list of donations.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Donation"
+        "404":
+          description: No donations found.
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      tags:
+        - Donations
+      summary: Record a new donation
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DonationCreate"
+      responses:
+        "201":
+          description: Donation recorded.
+        "400":
+          description: Invalid request data.
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+  /donations/{donationId}:
+    get:
+      tags:
+        - Donations
+      summary: Get a donation by ID
+      parameters:
+        - name: donationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "200":
+          description: Detailed donation information.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Donation"
+        "404":
+          description: Donation not found.
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    put:
+      tags:
+        - Donations
+      summary: Update a donation by ID
+      parameters:
+        - name: donationId
+          in: path
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: "#/components/schemas/DonationCreate"
+      responses:
+        "200":
+          description: Donation updated.
+        "400":
+          description: Invalid request data.
+        "404":
+          description: Donation not found.
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+    delete:
+      tags:
+        - Donations
+      summary: Delete a donation by ID
+      parameters:
+        - name: donationId
+          in: path
+          required: true
+          schema:
+            type: string
+      responses:
+        "204":
+          description: Donation successfully deleted.
+        "404":
+          description: Donation not found.
+        "403":
+          description: Unauthorized attempt to delete a donation.
+        "500":
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Error"
+   
+  /volunteerOpportunities:
+    get:
+      tags:
+        - Volunteer Opportunities
+      summary: List all volunteer opportunities
+      description: Retrieve a list of all volunteer opportunities available for users to participate in.
+      responses:
+        '200':
+          description: A list of volunteer opportunities.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VolunteerOpportunity'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - Volunteer Opportunities
+      summary: Create a new volunteer opportunity
+      description: Allows organizations to create a new volunteer opportunity with provided information.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolunteerOpportunityCreate'
+      responses:
+        '201':
+          description: Volunteer opportunity created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolunteerOpportunity'
+        '400':
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /volunteerOpportunities/{opportunityId}:
+    get:
+      tags:
+        - Volunteer Opportunities
+      summary: Get a specific volunteer opportunity
+      description: Retrieve detailed information about a volunteer opportunity by its ID.
+      parameters:
+        - in: path
+          name: opportunityId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the volunteer opportunity.
+            example: "vol123"
+      responses:
+        '200':
+          description: Detailed information about the volunteer opportunity.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolunteerOpportunity'
+        '404':
+          description: Volunteer opportunity not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - Volunteer Opportunities
+      summary: Update an existing volunteer opportunity
+      description: Update information for an existing volunteer opportunity identified by its ID.
+      parameters:
+        - in: path
+          name: opportunityId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the volunteer opportunity to update.
+            example: "vol456"
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolunteerOpportunityUpdate'
+      responses:
+        '200':
+          description: Volunteer opportunity updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolunteerOpportunity'
+        '400':
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Volunteer opportunity not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - Volunteer Opportunities
+      summary: Delete a specific volunteer opportunity
+      description: Remove a volunteer opportunity from the platform by its ID.
+      parameters:
+        - in: path
+          name: opportunityId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the volunteer opportunity to be deleted.
+            example: "vol789"
+      responses:
+        '204':
+          description: Volunteer opportunity deleted successfully.
+        '404':
+          description: Volunteer opportunity not
+  /healthAndNutritionGuides:
+    get:
+      tags:
+        - HealthAndNutritionGuides
+      summary: List all health and nutrition guides
+      responses:
+        '200':
+          description: A list of health and nutrition guides.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/HealthAndNutritionGuide'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+        - HealthAndNutritionGuides
+      summary: Create a new health and nutrition guide
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthAndNutritionGuideCreate'
+      responses:
+        '201':
+          description: Health and nutrition guide created successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthAndNutritionGuide'
+        '400':
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+  /healthAndNutritionGuides/{guideId}:
+    get:
+      tags:
+        - HealthAndNutritionGuides
+      summary: Get a specific health and nutrition guide
+      parameters:
+        - in: path
+          name: guideId
+          required: true
+          schema:
+            type: string
+      responses:
+        '200':
+          description: Detailed information about the health and nutrition guide.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthAndNutritionGuide'
+        '404':
+          description: Guide not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    patch:
+      tags:
+        - HealthAndNutritionGuides
+      summary: Update an existing health and nutrition guide
+      parameters:
+        - in: path
+          name: guideId
+          required: true
+          schema:
+            type: string
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/HealthAndNutritionGuideUpdate'
+      responses:
+        '200':
+          description: Health and nutrition guide updated successfully.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/HealthAndNutritionGuide'
+        '400':
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '404':
+          description: Guide not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+        - HealthAndNutritionGuides
+      summary: Delete a specific health and nutrition guide
+      parameters:
+        - in: path
+          name: guideId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Health and nutrition guide deleted successfully.
+        '404':
+          description: Guide not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /volunteerSignUps:
+    get:
+      tags:
+      - Volunteer Sign Ups
+      summary: List all volunteer sign-ups
+      description: Retrieve a list of all volunteer sign-ups.
+      responses:
+        '200':
+          description: A list of volunteer sign-ups.
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/VolunteerSignUp'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    post:
+      tags:
+      - Volunteer Sign Ups
+      summary: Create a new volunteer sign-up
+      description: Register a user for a volunteer opportunity.
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/VolunteerSignUpCreate'
+      responses:
+        '201':
+          description: Volunteer sign-up successfully created.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolunteerSignUp'
+        '400':
+          description: Invalid request data.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+  /volunteerSignUps/{signUpId}:
+    get:
+      tags:
+      - Volunteer Sign Ups
+      summary: Get a specific volunteer sign-up
+      description: Retrieve detailed information about a volunteer sign-up by its ID.
+      parameters:
+        - in: path
+          name: signUpId
+          required: true
+          schema:
+            type: string
+            description: The unique identifier of the volunteer sign-up.
+      responses:
+        '200':
+          description: Detailed volunteer sign-up information.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/VolunteerSignUp'
+        '404':
+          description: Volunteer sign-up not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+    delete:
+      tags:
+      - Volunteer Sign Ups
+      summary: Delete a volunteer sign-up
+      description: Remove a volunteer sign-up from the system.
+      parameters:
+        - in: path
+          name: signUpId
+          required: true
+          schema:
+            type: string
+      responses:
+        '204':
+          description: Volunteer sign-up successfully deleted.
+        '404':
+          description: Volunteer sign-up not found.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+        '500':
+          description: Server error.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Error'
+
+components:
+  schemas:
+    EducationalResource:
+      type: object
+      properties:
+        resourceId:
+          type: string
+          description: The unique identifier of the educational resource.
+          example: "resource123"
+        title:
+          type: string
+          description: The title of the educational resource.
+          example: "Basic Mathematics for Children"
+        content:
+          type: string
+          description: The content of the educational resource, which could be text, a URL to an external site, or embedded video content.
+          example: "This resource covers fundamental concepts in mathematics suitable for children in early education."
+        category:
+          type: string
+          description: The category of the educational resource.
+          example: "Mathematics"
+        publishedDate:
+          type: string
+          format: date
+          description: The date when the resource was published on the platform.
+          example: "2023-04-12"
+    EducationalResourceCreate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: The title of the educational resource to be created.
+          example: "Introduction to Environmental Science"
+        content:
+          type: string
+          description: The detailed content or description of the educational resource.
+          example: "A comprehensive guide to understanding the basics of environmental science."
+        category:
+          type: string
+          description: The category that best describes the educational resource.
+          example: "Science"
+        publishedDate:
+          type: string
+          format: date
+          description: The publication date of the educational resource.
+          example: "2023-04-15"
+
+    EducationalResourceUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: "Updated title of the educational resource."
+          example: "Advanced Environmental Science"
+        content:
+          type: string
+          description: "Updated content of the educational resource."
+          example: "An in-depth exploration into environmental science topics."
+        category:
+          type: string
+          description: "Updated category of the educational resource."
+          example: "Science"
+        # Note: In some cases, you might not want to allow updating the publishedDate.
+    User:
+      type: object
+      properties:
+        userId:
+          type: string
+          description: Unique identifier for the user.
+          example: "user123"
+        username:
+          type: string
+          description: Username of the user.
+          example: "johndoe"
+        email:
+          type: string
+          format: email
+          description: Email address of the user.
+          example: "johndoe@example.com"
+        role:
+          type: string
+          description: Role of the user within the platform.
+          example: "volunteer"
+    UserCreate:
+      type: object
+      required:
+        - username
+        - email
+        - password
+      properties:
+        username:
+          type: string
+          description: The user's chosen username.
+          example: "john_doe"
+        email:
+          type: string
+          format: email
+          description: The user's email address.
+          example: "john.doe@example.com"
+        password:
+          type: string
+          format: password
+          description: The user's chosen password. Should be stored encrypted in the database for security.
+          example: "p@ssW0rd!"
+        role:
+          type: string
+          description: The role assigned to the user. Default is 'user'.
+          example: "user"
+          enum:
+            - user
+            - admin
+            - volunteer
+            - organizer
+        fullName:
+          type: string
+          description: The full name of the user.
+          example: "John Doe"
+        address:
+          type: object
+          properties:
+            street:
+              type: string
+              description: The street part of the user's address.
+              example: "1234 Main St"
+            city:
+              type: string
+              description: The city part of the user's address.
+              example: "Anytown"
+            state:
+              type: string
+              description: The state part of the user's address.
+              example: "Anystate"
+            zipCode:
+              type: string
+              description: The postal code part of the user's address.
+              example: "123456"
+      example:
+        username: "new_user_123"
+        email: "newuser123@example.com"
+        password: "Secure*Password123"
+        role: "volunteer"
+        fullName: "New User"
+        address:
+          street: "4567 Side St"
+          city: "Sometown"
+          state: "Mystate"
+          zipCode: "654321"
+
+    UserPartialUpdate:
+      type: object
+      properties:
+        email:
+          type: string
+          format: email
+          description: The user's new email address.
+        username:
+          type: string
+          description: The user's new username.
+      example:
+        email: newemail@example.com
+        username: newusername
+    UserUpdate:
+      type: object
+      properties:
+        username:
+          type: string
+          description: The user's new username.
+          example: "updated_john_doe"
+        email:
+          type: string
+          format: email
+          description: The user's updated email address.
+          example: "updated.john.doe@example.com"
+        fullName:
+          type: string
+          description: The user's full name, if needing an update.
+          example: "Updated John Doe"
+        address:
+          type: object
+          description: The user's updated address, if any changes are needed.
+          properties:
+            street:
+              type: string
+              description: The street part of the user's updated address.
+              example: "5678 Another St"
+            city:
+              type: string
+              description: The city part of the user's updated address.
+              example: "Newtown"
+            state:
+              type: string
+              description: The state part of the user's updated address.
+              example: "Newstate"
+            zipCode:
+              type: string
+              description: The postal code part of the user's updated address.
+              example: "765432"
+        phone:
+          type: string
+          description: The user's updated phone number.
+          example: "+1234567890"
+        role:
+          type: string
+          description: The user's updated role within the platform. This should be managed carefully to ensure proper access control.
+          example: "volunteer"
+          enum:
+            - user
+            - admin
+            - volunteer
+            - organizer
+      example:
+        username: "updated_user_123"
+        email: "updateduser123@example.com"
+        fullName: "Updated User Name"
+        address:
+          street: "6789 New St"
+          city: "New City"
+          state: "New State"
+          zipCode: "987654"
+        phone: "+0987654321"
+        role: "admin"
+    Organization:
+      type: object
+      properties:
+        organizationId:
+          type: string
+          description: Unique identifier for the organization.
+          example: "org123"
+        name:
+          type: string
+          description: Name of the organization.
+          example: "Global Health Initiative"
+        description:
+          type: string
+          description: A brief description of the organization and its mission.
+          example: "Focused on improving global health through innovative projects."
+        contactInfo:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: Contact email for the organization.
+              example: "contact@globalhealth.org"
+            phone:
+              type: string
+              description: Contact phone number for the organization.
+              example: "+1234567890"
+    OrganizationCreate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Name for the new organization.
+          example: "Education for Everyone"
+        description:
+          type: string
+          description: Description of the new organization's mission and goals.
+          example: "Dedicated to providing educational resources worldwide."
+        contactInfo:
+          $ref: "#/components/schemas/Organization/properties/contactInfo"
+    OrganizationUpdate:
+      type: object
+      properties:
+        name:
+          type: string
+          description: Updated name of the organization.
+          example: "Global Education Initiative"
+        description:
+          type: string
+          description: Updated description of the organization's mission.
+          example: "Expanding our mission to include educational programs."
+        contactInfo:
+          type: object
+          properties:
+            email:
+              type: string
+              format: email
+              description: Updated contact email for the organization.
+              example: "info@globalhealth.org"
+            phone:
+              type: string
+              description: Updated contact phone number for the organization.
+              example: "+1987654321"
+
+    Project:
+      type: object
+      properties:
+        projectId:
+          type: string
+          description: Unique identifier for the project.
+          example: "proj123"
+        title:
+          type: string
+          description: Title of the project.
+          example: "Clean Water Initiative"
+        description:
+          type: string
+          description: Detailed description of the project and its goals.
+          example: "A project aimed at providing clean drinking water to underserved communities."
+        category:
+          type: string
+          description: Category of the project (e.g., Education, Health).
+          example: "Health"
+        status:
+          type: string
+          description: Current status of the project (
+          example: "Active"
+    ProjectCreate:
+      type: object
+      required:
+        - title
+        - description
+        - category
+      properties:
+        title:
+          type: string
+          description: Title of the new project.
+          example: "Community Education for All"
+        description:
+          type: string
+          description: A brief description of the project's objectives and impact.
+          example: "This project aims to offer free educational resources and classes to underprivileged communities."
+        category:
+          type: string
+          description: The category that best describes the project.
+          example: "Education"
+    ProjectUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          description: Updated title of the project.
+          example: "Advanced Community Education"
+        description:
+          type: string
+          description: Updated description of the project's objectives and impact.
+          example: "Expanding our educational resources to include vocational training for adults."
+        category:
+          type: string
+          description: Updated project category.
+          example: "Education"
+        status:
+          type: string
+          description: Updated status of the project.
+          example: "Ongoing"
+    Donation:
+      type: object
+      properties:
+        donationId:
+          type: string
+          example: "don123"
+        amount:
+          type: number
+          example: 100.00
+        donorName:
+          type: string
+          example: "John Doe"
+        projectId:
+          type: string
+          example: "proj456"
+        date:
+          type: string
+          format: date
+          example: "2023-08-01"
+    DonationCreate:
+      type: object
+      properties:
+        amount:
+          type: number
+          example: 50.00
+        donorName:
+          type: string
+          example: "Jane Smith"
+        projectId:
+          type: string
+          example: "proj789"
+        date:
+          type: string
+          format: date
+          example: "2023-09-01"
+    VolunteerOpportunity:
+      type: object
+      properties:
+        opportunityId:
+          type: string
+          example: "vol123"
+        title:
+          type: string
+          example: "Beach Cleanup"
+        description:
+          type: string
+          example: "Join us to help clean the local beach and protect marine life."
+        date:
+          type: string
+          format: date
+          example: "2023-09-15"
+        location:
+          type: string
+          example: "Seaside Park"
+        requirements:
+          type: string
+          example: "Bring gloves and wear comfortable shoes."
+    VolunteerOpportunityCreate:
+      type: object
+      required:
+        - title
+        - description
+        - date
+        - location
+      properties:
+        title:
+          type: string
+          example: "Park Clean-Up"
+        description:
+          type: string
+          example: "Volunteers needed for a community park clean-up effort. Help keep our parks clean and green!"
+        date:
+          type: string
+          format: date
+          example: "2023-10-20"
+        location:
+          type: string
+          example: "Community Park, Main Street"
+        requirements:
+          type: string
+          example: "Please wear comfortable clothing and closed-toe shoes. Gloves and bags will be provided."
+        category:
+          type: string
+          example: "Environment"
+    VolunteerOpportunityUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Beach Clean-Up"
+        description:
+          type: string
+          example: "Join us for a beach clean-up event to remove trash and debris from our beautiful coastlines."
+        date:
+          type: string
+          format: date
+          example: "2023-11-05"
+        location:
+          type: string
+          example: "Oceanview Beach"
+        requirements:
+          type: string
+          example: "Sunscreen, hats, and water bottles recommended. All cleaning materials will be provided."
+        category:
+          type: string
+          example: "Conservation"
+
+    HealthAndNutritionGuide:
+      type: object
+      properties:
+        guideId:
+          type: string
+          example: "guide123"
+        title:
+          type: string
+          example: "Understanding Childhood Nutrition"
+        content:
+          type: string
+          example: "A comprehensive guide to essential nutrients for children."
+    HealthAndNutritionGuideCreate:
+      type: object
+      required:
+        - title
+        - content
+      properties:
+        title:
+          type: string
+          example: "Healthy Eating for Toddlers"
+        content:
+          type: string
+          example: "This guide provides insights into balanced diets for toddlers, including meal ideas and nutritional advice."
+    HealthAndNutritionGuideUpdate:
+      type: object
+      properties:
+        title:
+          type: string
+          example: "Updated Guide: Healthy Eating for Toddlers"
+        content:
+          type: string
+          example: "An updated version of our guide, including new research on toddler nutrition and additional meal ideas."
+          
+    VolunteerSignUp:
+      type: object
+      properties:
+        signUpId:
+          type: string
+          description: Unique identifier for the volunteer sign-up.
+          example: "signup123"
+        userId:
+          type: string
+          description: Identifier of the user who signed up.
+          example: "user456"
+        opportunityId:
+          type: string
+          description: Identifier of the volunteer opportunity.
+          example: "opp789"
+        signUpDate:
+          type: string
+          format: date
+          description: The date when the sign-up was made.
+          example: "2023-08-01"
+        status:
+          type: string
+          description: The current status of the sign-up (e.g., Pending, Confirmed, Completed).
+          example: "Confirmed"
+    VolunteerSignUpCreate:
+      type: object
+      required:
+        - userId
+        - opportunityId
+      properties:
+        userId:
+          type: string
+          description: Identifier of the user signing up.
+          example: "user456"
+        opportunityId:
+          type: string
+          description: Identifier of the volunteer opportunity being signed up for.
+          example: "opp789"
+    Error:
+      type: object
+      properties:
+        code:
+          type: integer
+          format: int32
+          description: HTTP status code of the error.
+          example: 404
+        message:
+          type: string
+          description: A short, human-readable summary of the problem.
+          example: "Organization not found."

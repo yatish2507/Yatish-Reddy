@@ -1,0 +1,320 @@
+@import url("https://fonts.googleapis.com/css2?family=Nunito:ital,wght@0,200..1000;1,200..1000&family=Oswald:wght@200..700&family=Work+Sans:ital,wght@0,100..900;1,100..900&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Kanit:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&family=Rubik:ital,wght@0,300..900;1,300..900&display=swap");
+
+
+.resource-container {
+    max-width: 1200px;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+}
+
+.safety-report-button {
+    position: fixed;
+    /* Fixed positioning to keep the button visible */
+    right: 0;
+    /* Align to the right side of the page */
+    top: 50%;
+    /* Center vertically */
+    transform: translateY(-50%);
+    /* Adjust to exactly center the button */
+    z-index: 1000;
+    /* Ensure it's above other content */
+}
+
+.safety-report-button a {
+    display: block;
+    /* Block display to size the link */
+    padding: 10px 20px;
+    /* Padding for button size */
+    background-color: grey;
+    /* Red background for visibility */
+    color: white;
+    /* White text color */
+    text-align: center;
+    /* Center text inside the button */
+    border-radius: 5px;
+    /* Rounded corners */
+    text-decoration: none;
+    /* Remove underline from link */
+}
+
+.safety-report-button a:hover {
+    background-color: #c00;
+    /* Darker red on hover */
+}
+
+.resource-container h1 {
+    color: #003366;
+    font-size: 2em;
+}
+
+.resource-container p {
+    color: #666;
+    font-size: 1em;
+}
+
+.resource-container .user-testimonial {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 50px 0;
+}
+
+.resource-container .user-testimonial img {
+    max-width: 100%;
+    height: auto;
+    border-radius: 10px;
+}
+
+.resource-container .user-testimonial blockquote {
+    font-style: italic;
+    margin: 0 20px;
+}
+
+.resource-container .user-testimonial blockquote p {
+    color: #333;
+}
+
+.resource-container .user-testimonial blockquote footer {
+    text-align: right;
+    color: #666;
+    margin-top: 10px;
+}
+
+@media (max-width: 768px) {
+    .resource-container .user-testimonial .user-testimonial {
+        flex-direction: column;
+    }
+
+    .resource-container .user-testimonial .user-testimonial img {
+        max-width: 80%;
+        margin-bottom: 20px;
+    }
+}
+
+.resource-container .read-story-btn {
+    background-color: #0056b3;
+    /* Adjust background color to match design */
+    color: white;
+    border: none;
+    padding: 10px 20px;
+    font-size: 1em;
+    cursor: pointer;
+    border-radius: 5px;
+    /* Adjust to match design */
+    margin-top: 20px;
+}
+
+.resource-container .image-container {
+    perspective: 1000px;
+    width: 200px;
+    height: auto;
+    margin: auto;
+}
+
+.resource-container .rotatable-image {
+    width: 100%;
+    height: auto;
+    animation: rotateImage 3s forwards;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+}
+
+@keyframes rotateImage {
+    0% {
+        transform: rotateY(0deg);
+    }
+
+    100% {
+        transform: rotateY(45deg);
+    }
+}
+
+.category-card {
+    width: 100%;
+    height: 300px;
+    background-color: #f0f0f0;
+    border: 2px solid #ccc;
+    border-radius: 10px;
+    margin-bottom: 20px;
+    padding: 20px;
+    text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+
+.category-card:hover {
+    background-color: #e0e0e0;
+}
+
+.category-card .category-title {
+    font-size: 1.5em;
+    color: #333;
+    margin-bottom: 10px;
+}
+
+.category-card .resource-count {
+    font-size: 1em;
+    color: #666;
+}
+
+.category-card-expanded {
+    height: 400px;
+}
+
+.category-card-expanded .category-title {
+    font-size: 2em;
+}
+
+.category-card-expanded .resource-count {
+    font-size: 1.5em;
+}
+
+/*# sourceMappingURL=app.css.map */
+=======
+.resource-container {
+  max-width: 1200px;
+  margin: auto;
+  padding: 20px;
+  text-align: center;
+}
+.safety-report-button {
+    position: fixed; /* Fixed positioning to keep the button visible */
+    right: 0; /* Align to the right side of the page */
+    top: 50%; /* Center vertically */
+    transform: translateY(-50%); /* Adjust to exactly center the button */
+    z-index: 1000; /* Ensure it's above other content */
+}
+ 
+.safety-report-button a {
+    display: block; /* Block display to size the link */
+    padding: 10px 20px; /* Padding for button size */
+    background-color: grey; /* Red background for visibility */
+    color: white; /* White text color */
+    text-align: center; /* Center text inside the button */
+    border-radius: 5px; /* Rounded corners */
+    text-decoration: none; /* Remove underline from link */
+}
+ 
+.safety-report-button a:hover {
+    background-color: #c00; /* Darker red on hover */
+}
+ 
+.resource-container h1 {
+  color: #003366;
+  font-size: 2em;
+}
+.resource-container p {
+  color: #666;
+  font-size: 1em;
+}
+.resource-container .user-testimonial {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin: 50px 0;
+}
+.resource-container .user-testimonial img {
+  max-width: 100%;
+  height: auto;
+  border-radius: 10px;
+}
+.resource-container .user-testimonial blockquote {
+  font-style: italic;
+  margin: 0 20px;
+}
+.resource-container .user-testimonial blockquote p {
+  color: #333;
+}
+.resource-container .user-testimonial blockquote footer {
+  text-align: right;
+  color: #666;
+  margin-top: 10px;
+}
+@media (max-width: 768px) {
+  .resource-container .user-testimonial .user-testimonial {
+    flex-direction: column;
+  }
+  .resource-container .user-testimonial .user-testimonial img {
+    max-width: 80%;
+    margin-bottom: 20px;
+  }
+}
+.resource-container .read-story-btn {
+  background-color: #0056b3;
+  /* Adjust background color to match design */
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  font-size: 1em;
+  cursor: pointer;
+  border-radius: 5px;
+  /* Adjust to match design */
+  margin-top: 20px;
+}
+.resource-container .image-container {
+  perspective: 1000px;
+  width: 200px;
+  height: auto;
+  margin: auto;
+}
+.resource-container .rotatable-image {
+  width: 100%;
+  height: auto;
+  animation: rotateImage 3s forwards;
+  transform-style: preserve-3d;
+  backface-visibility: hidden;
+}
+ 
+@keyframes rotateImage {
+  0% {
+    transform: rotateY(0deg);
+  }
+  100% {
+    transform: rotateY(45deg);
+  }
+}
+ 
+.category-card {
+  width: 100%;
+  height: 300px;
+  background-color: #f0f0f0;
+  border: 2px solid #ccc;
+  border-radius: 10px;
+  margin-bottom: 20px;
+  padding: 20px;
+  text-align: center;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+}
+.category-card:hover {
+  background-color: #e0e0e0;
+}
+.category-card .category-title {
+  font-size: 1.5em;
+  color: #333;
+  margin-bottom: 10px;
+}
+.category-card .resource-count {
+  font-size: 1em;
+  color: #666;
+}
+ 
+.category-card-expanded {
+  height: 400px;
+}
+.category-card-expanded .category-title {
+  font-size: 2em;
+}
+.category-card-expanded .resource-count {
+  font-size: 1.5em;
+}
+ 
+/*# sourceMappingURL=app.css.map */
+ 
+

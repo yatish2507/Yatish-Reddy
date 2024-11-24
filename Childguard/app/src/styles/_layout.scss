@@ -1,0 +1,81 @@
+.resource-container {
+    max-width: $container-max-width;
+    margin: auto;
+    padding: 20px;
+    text-align: center;
+
+    h1 {
+        color: $primary-color;
+        font-size: 2em;
+    }
+
+    p {
+        color: $secondary-color;
+        font-size: 1em;
+    }
+
+    .user-testimonial {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        margin: 50px 0;
+
+        img {
+            max-width: 100%;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        blockquote {
+            font-style: italic;
+            margin: 0 20px;
+
+            p {
+                color: #333;
+            }
+
+            footer {
+                text-align: right;
+                color: $secondary-color;
+                margin-top: 10px;
+            }
+        }
+
+        @media (max-width: 768px) {
+            .user-testimonial {
+                flex-direction: column;
+            }
+
+            .user-testimonial img {
+                max-width: 80%;
+                margin-bottom: 20px;
+            }
+        }
+    }
+
+    .read-story-btn {
+        background-color: #0056b3;
+        /* Adjust background color to match design */
+        color: white;
+        border: none;
+        padding: 10px 20px;
+        font-size: 1em;
+        cursor: pointer;
+        border-radius: 5px;
+        /* Adjust to match design */
+        margin-top: 20px;
+    }
+
+    .image-container {
+        perspective: 1000px;
+        width: 200px;
+        height: auto;
+        margin: auto;
+    }
+
+    .rotatable-image {
+        width: 100%;
+        height: auto;
+        @include rotateImage;
+    }
+}

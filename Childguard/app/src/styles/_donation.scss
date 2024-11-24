@@ -1,0 +1,96 @@
+.donation_container {
+  background-color: #21213b;
+  min-height: 100vh;
+  width: 100vw;
+}
+.donation_grid{
+  background-color: #21213b;
+}
+.donation_paper {
+  padding: 16px;
+  max-width: 750px;
+  background-color: #2f2f4f;
+  margin-top: 20px;
+}
+
+.donation_typographyHeader {
+  font-weight: bold;
+  color: white;
+  margin-bottom: 12px;
+}
+
+.donation_typographyBody {
+  margin-bottom: 24px;
+  color: white;
+  word-spacing: 2px;
+}
+
+.donation_formControl {
+  .donation_legend {
+    color: white;
+  }
+
+  .MuiToggleButtonGroup-grouped {
+    margin-right: 8px;
+    color: white;
+    width: 75px;
+    height: 35px;
+    border-color: white;
+    border-radius: 20px;
+
+    &:hover {
+      background-color: white;
+      color: black;
+    }
+
+    &.Mui-selected {
+      background-color: white;
+      color: black;
+    }
+
+    &:last-child {
+      margin-right: 0;
+    }
+  }
+}
+
+.donation_textField {
+  label.Mui-focused {
+    color: white;
+  }
+
+  .MuiOutlinedInput-root {
+    fieldset {
+      border-color: white;
+    }
+
+    &:hover fieldset {
+      border-color: white;
+    }
+
+    &.Mui-focused fieldset {
+      border-color: white;
+    }
+  }
+}
+
+.donation_amountBox {
+  margin-top: 16px;
+  padding: 16px 24px;
+  background-color: #21213b;
+  border-radius: 8px;
+  box-shadow: 0 3px 5px 2px rgba(0, 0, 0, 0.1);
+  display: inline-block;
+}
+
+.donation_typographyAmount {
+  font-weight: medium;
+  color: white;
+  display: inline;
+  letter-spacing: 0.1rem;
+  text-shadow: 1px 1px 2px black;
+}
+
+.donation_donateButton {
+  margin-top: 30px;
+}

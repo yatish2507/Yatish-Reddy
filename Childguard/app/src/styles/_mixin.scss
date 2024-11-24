@@ -1,0 +1,15 @@
+@mixin rotateImage {
+    animation: rotateImage 3s forwards;
+    transform-style: preserve-3d;
+    backface-visibility: hidden;
+
+    @keyframes rotateImage {
+        0% {
+            transform: rotateY(0deg);
+        }
+
+        100% {
+            transform: rotateY(45deg);
+        }
+    }
+}

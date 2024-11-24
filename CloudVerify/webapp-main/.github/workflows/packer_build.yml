@@ -1,0 +1,60 @@
+name: Packer Build and Deploy Custom Image
+
+on:
+  workflow_run:
+    workflows: ["Web App CI"]
+    types:
+      - completed
+
+jobs:
+  packer_build:
+    if: github.event.workflow_run.conclusion == 'success' && github.event.workflow_run.event == 'push'
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout Repository
+      uses: actions/checkout@v3
+
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+
+    - name: Build Application Artifact
+      run: |
+        echo "Building application artifact..."
+        zip -r webapp.zip webapp/app/ webapp/app.py webapp/requirements.txt
+        echo "Artifact created: webapp.zip"
+      
+    - name: Install Packer
+      run: |
+        sudo apt-get update
+        curl -fsSL https://apt.releases.hashicorp.com/gpg | sudo apt-key add -
+        sudo apt-add-repository "deb [arch=amd64] https://apt.releases.hashicorp.com $(lsb_release -cs) main"
+        sudo apt-get update && sudo apt-get install packer
+
+    - name: Initialize Packer
+      run: |
+        packer init .
+        packer fmt .
+        packer validate .
+      working-directory: webapp/packer
+
+    - name: Build AMI
+      run: packer build aws.pkr.hcl
+      working-directory: webapp/packer
+
+    - name: Configure AWS CLI for Demo
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.DEMO_AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.DEMO_AWS_SECRET_ACCESS_KEY }}
+        aws-region: us-east-1
+    
+    - name: Instance Refresh
+      run: |
+        cd webapp/packer/scripts
+        chmod +x refresh_instance.sh
+        ./refresh_instance.sh

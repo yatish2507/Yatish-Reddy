@@ -1,0 +1,20 @@
+meta {
+  name: post
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:3000/donate/
+  body: none
+  auth: none
+}
+
+body:json {
+  {
+    "userId": "123456",
+      "amount": 1234,
+      "projectId": "1234555"
+      
+  }
+}

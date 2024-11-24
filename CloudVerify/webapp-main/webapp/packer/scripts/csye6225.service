@@ -1,0 +1,18 @@
+[Unit]
+Description=Flask Web App
+After=network.target
+
+[Service]
+User=csye6225
+Group=csye6225
+WorkingDirectory=/opt/webapp
+EnvironmentFile=/opt/webapp/.env
+ExecStart=/usr/bin/python3 /opt/webapp/webapp/app.py
+Restart=always
+RestartSec=3
+StandardOutput=syslog
+StandardError=syslog
+SyslogIdentifier=csye6225
+
+[Install]
+WantedBy=multi-user.target
